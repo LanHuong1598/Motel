@@ -1,10 +1,12 @@
 package com.example.intergration.motel.repository;
 
+import com.example.intergration.motel.beans.News;
 import com.example.intergration.motel.beans.Room;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.sql.Date;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,4 +32,8 @@ public interface RoomRepository extends JpaRepository<Room, Integer> {
     List<Room> findByOwner(int id);
 
     Optional<Room> findByOwnerAndIdroom( int owner, int id );
+
+
+    @Query("select n from Room n ORDER BY n.status DESC ")
+    List<Room> getALll();
 }

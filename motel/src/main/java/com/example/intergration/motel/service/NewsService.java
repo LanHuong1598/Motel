@@ -21,4 +21,8 @@ public interface NewsService {
     News save( News news );
 
     News deleteNewsById(int id );
+
+    List<News> getAll(Date date) ;
+
+
 }

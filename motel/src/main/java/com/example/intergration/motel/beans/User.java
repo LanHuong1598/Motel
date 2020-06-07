@@ -1,5 +1,9 @@
 package com.example.intergration.motel.beans;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
 import javax.persistence.*;
 
 @Entity
@@ -17,14 +21,8 @@ public class User {
     @Column(name = "idgroup")
     private String idgroup;
 
-    public User() {
-    }
-
-    public User( String acc, String password, String idgroup){
-        this.acc = acc;
-        this.password = password;
-        this.idgroup = idgroup;
-    }
+    @Column(name = "sdt")
+    private String sdt;
 
     public int getIduser() {
         return iduser;
@@ -57,4 +55,23 @@ public class User {
     public void setIdgroup(String idgroup) {
         this.idgroup = idgroup;
     }
+
+    public String getSdt() {
+        return sdt;
+    }
+
+    public void setSdt(String sdt) {
+        this.sdt = sdt;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Column(name = "name")
+    private String name ;
 }

@@ -23,11 +23,7 @@ public class LogController {
     ){
         try{
             return new ResponseEntity<>(
-                    userRepository.save( new User(
-                            user.getAcc(),
-                            user.getPassword(),
-                            user.getIdgroup()
-                    )),
+                    userRepository.save(user),
                     HttpStatus.OK
             );
         }
@@ -42,7 +38,7 @@ public class LogController {
     ){
         Optional<User> user = userRepository.findByAcc( logInRequest.getUsername());
         if( user.isPresent() ){
-            if ( user.get().getPassword() != logInRequest.getPassword() ){
+            if (!user.get().getPassword().equals(logInRequest.getPassword()) ){
                 throw new UserNotFoundException("Password incorrect!");
             }
             else{

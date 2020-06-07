@@ -12,8 +12,9 @@ public class News {
     @Column(name = "idnews")
     private int idnews;
 
-    @Column(name = "idroom")
+    @Column(name = "idroom", nullable = true, updatable = false, insertable = false)
     private int idroom;
+
 
     @Column(name = "status")
     private int status;

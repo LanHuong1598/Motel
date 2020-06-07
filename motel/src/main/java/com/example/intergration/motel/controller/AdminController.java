@@ -3,7 +3,6 @@ package com.example.intergration.motel.controller;
 import com.example.intergration.motel.beans.User;
 import com.example.intergration.motel.exception.UserNotFoundException;
 import com.example.intergration.motel.repository.UserRepository;
-import com.sun.org.apache.regexp.internal.RE;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

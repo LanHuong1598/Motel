@@ -22,7 +22,7 @@ public class RoomImplementation implements RoomService {
 
     @Override
     public List<Room> findAllRoom() {
-        return roomRepository.findAll();
+        return roomRepository.getALll();
     }
 
     @Override
@@ -59,4 +59,22 @@ public class RoomImplementation implements RoomService {
 
         return room.orElse(null);
     }
+
+    @Override
+    public Room createRoom(Room room) {
+        roomRepository.save(room) ;
+        return  room;
+    }
+
+    @Override
+    public Room updateRoom(Room room) {
+        roomRepository.save(room);
+        return room;
+    }
+
+    public Room deleteRoom(Room room) {
+        roomRepository.delete(room);
+        return room;
+    }
+
 }

@@ -1,6 +1,7 @@
 package com.example.intergration.motel.implementation;
 
 import com.example.intergration.motel.beans.News;
+import com.example.intergration.motel.beans.NewsGet;
 import com.example.intergration.motel.repository.NewsRepository;
 import com.example.intergration.motel.service.NewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -46,6 +47,13 @@ public class NewsImplementation implements NewsService {
         return newsRepository.findByTimestartAndIdroom(date, roomid);
     }
 
+
+    @Override
+    public List<News> getAll(Date date) {
+        return newsRepository.getALll(date);
+    }
+
+
     @Override
     public News save(News news) {
         return newsRepository.save(news);
@@ -55,4 +63,6 @@ public class NewsImplementation implements NewsService {
     public News deleteNewsById(int id) {
         return newsRepository.deleteByIdnews(id);
     }
+
+
 }

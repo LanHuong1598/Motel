@@ -3,6 +3,7 @@ package com.example.intergration.motel.service;
 import com.example.intergration.motel.beans.Room;
 import org.springframework.stereotype.Service;
 
+import java.math.RoundingMode;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,4 +23,9 @@ public interface RoomService {
     List<Room> findAllHostRooms( int id );
 
     Room findRoomByOwnerAndId( int owner, int id );
+
+    Room createRoom(Room room) ;
+
+    Room updateRoom(Room room) ;
+
 }

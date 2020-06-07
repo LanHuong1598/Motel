@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -38,10 +37,24 @@ public class HostController {
     @Autowired
     UserServiceRepository userServiceRepository;
 
+    @GetMapping("/news")
+    public ResponseEntity<List<News>> getAllNews(
+            @PathVariable(name = "hostid") int id
+    ){
+        String group = userImplementation.getUserGroup(id);
+        if( Integer.parseInt(group) != 3 ){
+            return ResponseEntity.badRequest().build();
+        }
+        else{
+            return ResponseEntity.ok(
+                    newsImplementation.getNewsByUser(id)
+            );
+        }
+    }
 
     //Lấy tất cả bài đăng của chủ trọ
     @GetMapping("/{hostid}/news")
-    public ResponseEntity<List<News>> getAllNews(
+    public ResponseEntity<List<News>> getAllNewswithhost(
             @PathVariable(name = "hostid") int id
     ){
         String group = userImplementation.getUserGroup(id);
