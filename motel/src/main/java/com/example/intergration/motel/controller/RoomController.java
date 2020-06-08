@@ -116,7 +116,7 @@ public class RoomController {
     }
 
     //Thêm mói room
-    @PostMapping("/")
+    @PostMapping(path = "/")
     public ResponseEntity<Room> createRoom(
             @RequestBody Room room
     ){

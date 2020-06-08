@@ -23,8 +23,16 @@ public class UserService {
     @Column(name = "timeend")
     private Date timeEnd;
 
-    @Column(name = "numofnews")
-    private String numOfNews;
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+
+    @Column(name = "status")
+    private int status;
 
 
     public UserService() {
@@ -70,11 +78,4 @@ public class UserService {
         this.timeEnd = timeEnd;
     }
 
-    public String getNumOfNews() {
-        return numOfNews;
-    }
-
-    public void setNumOfNews(String numOfNews) {
-        this.numOfNews = numOfNews;
-    }
 }

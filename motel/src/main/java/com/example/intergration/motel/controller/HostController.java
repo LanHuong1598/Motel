@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.sql.Date;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Optional;
 
@@ -255,8 +256,7 @@ public class HostController {
     @PostMapping("/{hostid}/user_service/{serviceid}")
     public ResponseEntity<UserService> registerService(
             @PathVariable(name = "hostid") int hostid,
-            @PathVariable(name = "serviceid") int serviceid,
-            @RequestBody UserService userService
+            @PathVariable(name = "serviceid") int serviceid
     ){
         Optional<Service> _service = serviceRepository.findByIdservice(serviceid);
         if (!_service.isPresent()){
@@ -266,10 +266,15 @@ public class HostController {
             UserService us = new UserService();
             us.setIdservice( serviceid );
             us.setIduser(hostid);
-            us.setTimeStart(userService.getTimeStart());
-            us.setTimeEnd(userService.getTimeEnd());
-            us.setNumOfNews(userService.getNumOfNews());
-
+            Calendar c1 = Calendar.getInstance() ;
+            java.util.Date date = c1.getTime();
+            c1.roll(Calendar.DATE, 30);
+            java.util.Date dateend = c1.getTime() ;
+            Date date1 = new Date(date.getTime()) ;
+            Date date2 = new Date(dateend.getTime()) ;
+            us.setTimeStart(date1);
+            us.setTimeEnd(date2);
+            us.setStatus(0);
             return new ResponseEntity<>(
                     userServiceRepository.save(us), HttpStatus.OK
             );

@@ -8,6 +8,7 @@ import com.example.intergration.motel.repository.NewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -15,6 +16,7 @@ import javax.enterprise.inject.New;
 import java.sql.Date;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/news")
@@ -28,6 +30,12 @@ public class NewRest {
         Date date1 = new Date(date.getTime()) ;
         return ResponseEntity.ok(
                  newsRepository.getALll(date1));
+
+    }
+    @GetMapping("/{idnew}")
+    public ResponseEntity<Optional<News>> getByID(@PathVariable(name = "idnew") int idnew){
+        return ResponseEntity.ok(
+                newsRepository.findByIdnews(idnew));
 
     }
 }

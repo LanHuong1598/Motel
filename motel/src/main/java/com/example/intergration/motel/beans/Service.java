@@ -11,9 +11,6 @@ public class Service {
     @Column(name = "idservice")
     private int idservice;
 
-    @Column(name = "numofnew")
-    private int numOfNew;
-
     @Column(name = "money")
     private float money;
 
@@ -37,13 +34,6 @@ public class Service {
         this.idservice = idservice;
     }
 
-    public int getNumOfNew() {
-        return numOfNew;
-    }
-
-    public void setNumOfNew(int numOfNew) {
-        this.numOfNew = numOfNew;
-    }
 
     public float getMoney() {
         return money;
