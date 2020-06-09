@@ -235,13 +235,32 @@ public class HostController {
     }
 
     //Hiển thị tất cả dịch vụ đã đăng kí
-    @GetMapping("/{hostid}/user_services")
-    public ResponseEntity<List<UserService>> getRegisteredServices(
+    @GetMapping("/{hostid}/userservices/register")
+    public ResponseEntity<UserService> getRegister(
             @PathVariable(name = "hostid") int hostid
     ){
+        List<UserService> userServiceList = userServiceRepository.findRegisterbyIduser(hostid);
+        if (userServiceList != null)
         return ResponseEntity.ok(
-                userServiceRepository.findByIduser(hostid)
+                userServiceList.get(0)
         );
+        else
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND) ;
+    }
+
+    //Hiển thị tất cả dịch vụ đã đăng kí
+    @GetMapping("/{hostid}/userservices/using")
+    public ResponseEntity<UserService> getUsingServicebyIduserWithHost(
+            @PathVariable(name = "hostid") int hostid
+    ){
+        List<UserService> userServiceList = userServiceRepository.findUsingByIduser(hostid);
+        java.util.Date date =  new java.util.Date( );
+        Date date1 = new Date(date.getTime()) ;
+        if (userServiceList.get(0).getTimeEnd().compareTo(date1) >= 0)
+        return ResponseEntity.ok(
+                userServiceList.get(0)
+        );
+        else     return new ResponseEntity<>(HttpStatus.NOT_FOUND) ;
     }
 
     //Hiển thị tất cả dịch vụ

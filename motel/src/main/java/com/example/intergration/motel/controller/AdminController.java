@@ -1,12 +1,15 @@
 package com.example.intergration.motel.controller;
 
 import com.example.intergration.motel.beans.Service;
+import com.example.intergration.motel.beans.Stats;
 import com.example.intergration.motel.beans.User;
 import com.example.intergration.motel.beans.UserService;
 import com.example.intergration.motel.exception.UserNotFoundException;
 import com.example.intergration.motel.repository.ServiceRepository;
+import com.example.intergration.motel.repository.StatsRepository;
 import com.example.intergration.motel.repository.UserRepository;
 import com.example.intergration.motel.repository.UserServiceRepository;
+import org.omg.CORBA.DATA_CONVERSION;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -175,7 +178,7 @@ public class AdminController {
             else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
-    //Chỉnh sửa thong tin
+
     @PostMapping("/{admin_id}/services/")
     public ResponseEntity<Service> CreateService(
             @PathVariable(name = "admin_id") int admin_id,
@@ -190,7 +193,7 @@ public class AdminController {
             );
         }
     }
-    //Chỉnh sửa thong tin người dùng
+
     @PutMapping("/{admin_id}/service/{serviceId}")
     public ResponseEntity<Service> editService(
             @PathVariable(name = "admin_id") int admin_id,
@@ -243,7 +246,66 @@ public class AdminController {
         }
     }
 
+    @GetMapping("/{admin_id}/service/register")
+    public ResponseEntity<List<UserService>> getAllRegister(
+            @PathVariable(name = "admin_id") int admin_id
+            ){
+        if (!isAdmin(admin_id)){
+            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+        }
+        else
+        return new ResponseEntity<>(
+                userServiceRepository.findAllByStatusIsFalse(),
+                HttpStatus.OK);
+    }
 
+    @PutMapping("/{admin_id}/service/register/{userserviceId}")
+    public ResponseEntity<UserService> editUserService(
+            @PathVariable(name = "admin_id") int admin_id,
+            @PathVariable(name = "userserviceId") int userserviceId,
+            @RequestBody UserService service
+    ){
+        if (!isAdmin(admin_id)){
+            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+        }
+        else{
+            Optional<UserService> userService = userServiceRepository.findById(userserviceId);
+            if (userService.isPresent() ){
+                userService.get().setStatus(service.getStatus());
+                Calendar c1 = Calendar.getInstance() ;
+                java.util.Date date = c1.getTime();
+                c1.roll(Calendar.DATE, 30);
+                java.util.Date dateend = c1.getTime() ;
+                Date date1 = new Date(date.getTime()) ;
+                Date date2 = new Date(dateend.getTime()) ;
+                userService.get().setTimeStart(date1);
+                userService.get().setTimeEnd(date2);
+
+                return new ResponseEntity<>(
+                        userServiceRepository.save( userService.get() ),
+                        HttpStatus.OK
+                );
+            }
+            else return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @Autowired
+    StatsRepository statsRepository;
+    //Hiển thị tất cả người dùng
+    @GetMapping("/{admin_id}/stats/{start}/{end}")
+    public ResponseEntity<List<Stats>>getStats(
+            @PathVariable(name = "admin_id") int id,
+            @PathVariable(name = "start") Date start,
+            @PathVariable(name = "end") Date end
+    ){
+        if ( !isAdmin(id) ){
+            return new ResponseEntity<>( HttpStatus.UNAUTHORIZED);
+        }
+        return ResponseEntity.ok(
+            statsRepository.findAllByDate(start, end)
+        );
+    }
 
 
 }

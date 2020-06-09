@@ -24,6 +24,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
         http.cors().configurationSource(corsConfigurationSource()).and()
                 .csrf().disable();
 //                .authorizeRequests()
+
 //                .antMatchers("/secured/ws/rest/v1/store").hasIpAddress(storeIPAddress)
 //                .antMatchers("/secured/ws/rest/v1/login", "/secured/ws/rest/v1/setting").permitAll()
 //                .anyRequest().authenticated()
